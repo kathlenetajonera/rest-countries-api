@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>REST Countries API</title>
+    
+    <link rel="shortcut icon" href="./favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
+    <script type="module" src="js/index.js" defer></script>
+</head>
+<body class="">
+    <header class="header"></header>
+
+    <main class="main">
+        <div class="flex-wrapper flex-wrapper--space-between">
+            <div class="search">
+                <i class="fas fa-search search__icon"></i>
+                <input type="text" class="search__field" aria-label="search for a country" placeholder="Search for a country">
+            </div>
+
+            <div class="filter">
+                <p class="filter__custom-select">Filter by Region</p>
+
+                <ul class="filter__select-options">
+                    <li class="filter__select-option" data-value="Africa">Africa</li>
+                    <li class="filter__select-option" data-value="America">America</li>
+                    <li class="filter__select-option" data-value="Asia">Asia</li>
+                    <li class="filter__select-option" data-value="Europe">Europe</li>
+                    <li class="filter__select-option" data-value="Oceania">Oceania</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid grid--four" id="main-container">
+            <!-- <div class="country country--card" data-country-name="Germany">
+                <img class="country__flag" src="./germany.png" alt="country">
+
+                <div class="country__details">
+                    <h2 class="country__name">Germany</h2>
+
+                    <div class="country__detail">Population:
+                        <p class="country__data" id="population">81,770,000</p>
+                    </div>
+                    
+                    <div class="country__detail">Region:
+                        <p class="country__data" id="region">Europe</p>
+                    </div>
+
+                    <div class="country__detail">Capital:
+                        <p class="country__data" id="capital">Berlin</p>
+                    </div>
+                </div>
+            </div>
+            <div class="country country--card" data-country-name="Germany">
+                <img class="country__flag" src="./germany.png" alt="country">
+
+                <div class="country__details">
+                    <h2 class="country__name">Germany</h2>
+
+                    <div class="country__detail">Population:
+                        <p class="country__data" id="population">81,770,000</p>
+                    </div>
+                    
+                    <div class="country__detail">Region:
+                        <p class="country__data" id="region">Europe</p>
+                    </div>
+
+                    <div class="country__detail">Capital:
+                        <p class="country__data" id="capital">Berlin</p>
+                    </div>
+                </div>
+            </div>
+            <div class="country country--card" data-country-name="Germany">
+                <img class="country__flag" src="./germany.png" alt="country">
+
+                <div class="country__details">
+                    <h2 class="country__name">Germany</h2>
+
+                    <div class="country__detail">Population:
+                        <p class="country__data" id="population">81,770,000</p>
+                    </div>
+                    
+                    <div class="country__detail">Region:
+                        <p class="country__data" id="region">Europe</p>
+                    </div>
+
+                    <div class="country__detail">Capital:
+                        <p class="country__data" id="capital">Berlin</p>
+                    </div>
+                </div>
+            </div>
+            <div class="country country--card" data-country-name="Germany">
+                <img class="country__flag" src="./germany.png" alt="country">
+
+                <div class="country__details">
+                    <h2 class="country__name">Germany</h2>
+
+                    <div class="country__detail">Population:
+                        <p class="country__data" id="population">81,770,000</p>
+                    </div>
+                    
+                    <div class="country__detail">Region:
+                        <p class="country__data" id="region">Europe</p>
+                    </div>
+
+                    <div class="country__detail">Capital:
+                        <p class="country__data" id="capital">Berlin</p>
+                    </div>
+                </div>
+            </div>
+            <div class="country country--card" data-country-name="Germany">
+                <img class="country__flag" src="./germany.png" alt="country">
+
+                <div class="country__details">
+                    <h2 class="country__name">Germany</h2>
+
+                    <div class="country__detail">Population:
+                        <p class="country__data" id="population">81,770,000</p>
+                    </div>
+                    
+                    <div class="country__detail">Region:
+                        <p class="country__data" id="region">Europe</p>
+                    </div>
+
+                    <div class="country__detail">Capital:
+                        <p class="country__data" id="capital">Berlin</p>
+                    </div>
+                </div>
+            </div> -->
+            
+
+        </div>
+    </main>
+    
+</body>
+</html>

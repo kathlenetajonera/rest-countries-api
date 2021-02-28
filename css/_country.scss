@@ -1,0 +1,87 @@
+.country {
+    $self: &;
+
+    &--card {
+        cursor: pointer;
+
+        @include media-query(tablet) {
+            width: 16.25rem;
+        }
+
+        #{ $self }__flag {
+            width: 100%;
+            height: 11.25rem;
+            object-fit: cover;
+            border-radius: .375rem .375rem 0 0;
+        }
+
+        #{ $self }__details {
+            background-color: $white;
+            padding: 2rem 1.5rem;
+            border-radius: 0 0 .375rem .375rem;
+            font-family: $font-family;
+            color: $lightModeText;
+        }
+
+        #{ $self }__name {
+            margin: 0 0 1rem;
+            font-size: 1.3rem;
+        }
+    }
+
+    &--detailed {
+        font-family: $font-family;
+        margin: 4rem 0;
+
+        #{ $self }__flag {
+            width: Min(33.125rem, 100%);
+            height: 18.75rem;
+        }
+
+        #{ $self }__name {
+            font-size: 1.5rem;
+        }
+    }
+
+    &__flag {
+        display: block;
+    }
+
+    &__detail {
+        font-weight: 600;
+
+        &:not(:last-child) {
+            margin-bottom: .5rem;
+        }
+    }
+
+    &__data {
+        margin: 0;
+        font-weight: 300;
+        display: inline-block;
+    }
+
+    &__border-text {
+        font-weight: 600;
+        margin: 0 1rem 0 0;
+    }
+
+    &__border-countries {
+        margin-top: 1rem;
+
+        @include media-query(tablet) {
+            margin: 0;
+        }
+    }
+}
+
+.darkMode {
+    .country {
+        color: $white;
+    }
+
+    .country--card .country__details {
+        background-color: $darkModeElements;
+        color: $white;
+    }
+}

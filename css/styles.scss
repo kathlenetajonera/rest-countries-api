@@ -1,0 +1,265 @@
+@import "./variables";
+@import "./mixins";
+@import "./country";
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    box-sizing: inherit;
+    margin: 0;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+.header {
+    height: 5.5rem;
+    padding: 2rem 1rem;
+    font-family: $font-family;
+    color: $lightModeText;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // box-shadow: 0 .25rem .25rem 0 $lightModeBg;
+    position: relative;
+
+    @include media-query(tablet) {
+        padding: 2rem 4rem;
+    }
+
+    @include media-query(desktop-sm) {
+        padding: 2rem 5rem;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: 1.1rem;
+
+        @include media-query(tablet) {
+            font-size: 1.5rem;
+        }
+    }
+
+    &__title-link {
+        text-decoration: none;
+        color: $lightModeText;
+    }
+
+    &__toggle {
+        margin: 0;
+        font-size: .88rem;
+        font-weight: 600;
+        cursor: pointer;
+
+        &::before {
+            content: '\f186';
+            font-family: "Font Awesome 5 Free";
+            font-weight: 300;
+            display: inline-block;
+            transform: rotate(340deg);
+            margin-right: .6rem;
+        }
+    }
+}
+
+.main {
+    min-height: calc(100vh - 5.5rem);
+    padding: 2rem 1rem;
+    background-color: $lightModeBg;
+
+    @include media-query(tablet) {
+        padding: 2rem 4rem;
+    }
+
+    @include media-query(desktop-sm) {
+        padding: 2rem 5rem;
+    }
+}
+
+.flex-wrapper {
+    @include media-query(tablet) {
+        display: flex;
+
+        &--space-between {
+            justify-content: space-between;
+        }
+    }
+}
+
+.search {
+    position: relative;
+    width: Min(26rem, 100%);
+    // box-shadow: 0 0 1rem 0 $lightModeBg;
+
+    &__icon {
+        position: absolute;
+        top: 50%;
+        left: 2rem;
+        transform: translateY(-50%);
+        color: $lightModeInputText;
+    }
+
+    &__field {
+        outline: none;
+        border: none;
+        width: 100%;
+        padding: .8rem 2rem .8rem 5rem;
+        color: $lightModeInputText;
+        font-family: $font-family;
+        border-radius: .375rem;
+
+        &::placeholder {
+            color: $lightModeInputText;
+        }
+    }
+}
+
+.filter {
+    width: 10.625rem;
+    font-family: $font-family;
+    font-size: .8rem;
+    color: $lightModeText;
+    margin-top: 2rem;
+    position: relative;
+    cursor: pointer;
+
+    @include media-query(tablet) {
+        margin-top: 0;
+    }
+
+    &__custom-select {
+        padding: .8rem 1.5rem;
+        margin: 0;
+        background-color: $white;
+        border-radius: .375rem;
+        position: relative;
+
+        &::after {
+            content: "\f107";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 600;
+            display: inline-block;
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    &__select-options {
+        list-style-type: none;
+        background-color: $white;
+        border-radius: .25rem;
+        padding: .8rem 1.5rem;
+        margin-top: .5rem;
+        position: absolute;
+        width: 100%;
+        display: none;
+
+        &--active {
+            display: block;
+        }
+    }
+
+    &__select-option {
+        &:not(:last-child) {
+            padding-bottom: .5rem;
+        }
+    }
+}
+
+.button {
+    outline: none;
+    border: none;
+    background-color: $white;
+    font-family: $font-family;
+
+    &--back {
+        padding: .5rem 1.5rem;
+
+        &::before {
+            content: "\f060";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 600;
+            margin-right: .5rem;
+        }
+    }
+
+    &--country {
+        padding: .5rem 0;
+        width: 6.25rem;
+        margin: 0 .25rem .5rem 0;
+    }
+}
+
+.grid {
+    display: grid;
+    grid-gap: 2rem;
+
+    &--four {
+        margin: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(16.25rem, 1fr));
+    
+        @include media-query(tablet) {
+            margin: 3rem 0;
+        }
+
+        @include media-query(desktop-md) {
+            grid-gap: 3rem;
+        }
+    }
+
+    &--two {
+        margin: 1rem 0;
+
+        @include media-query(tablet) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+
+.darkMode {
+    .header {
+        background-color: $darkModeElements;
+
+        &__title-link {
+            color: $white;
+        }
+
+        &__toggle {
+            color: $white;
+
+            &::before {
+                font-weight: 600;
+            }
+        }
+    }
+
+    .main {
+        background-color: $darkModeBg;
+    }
+
+    .search__icon {
+        color: $white;
+    }
+
+    .search__field {
+        background-color: $darkModeElements;
+        color: $white;
+
+        &::placeholder {
+            color: $white;
+        }
+    }
+
+    .filter {
+        color: $white;
+
+        &__custom-select, &__select-options {
+            background-color: $darkModeElements;
+        }
+    }
+}
