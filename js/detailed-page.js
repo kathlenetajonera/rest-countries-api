@@ -1,11 +1,28 @@
 import * as header from "./header.js"; 
-import * as global from "./global.js";
+import { getData, saveSelectedCountry } from "./global.js";
 
 header.loadHeader();
-getSelectedCountry();
 
+const mainContainer = document.querySelector(".main");
 const container = document.querySelector("#country-container");
 let borderCountries = [];
+
+getSelectedCountry();
+
+mainContainer.addEventListener("click", e => {
+    const target = e.target;
+    const backBtn = target.classList.contains("button--back");
+    const borderCountry = target.classList.contains("button--country");
+
+    if (backBtn) {
+        window.location = "index.html";
+    } else if (borderCountry) {
+        const borderName = target.dataset.country;
+
+        saveSelectedCountry(borderName);
+        getSelectedCountry();
+    }
+})
 
 function getSelectedCountry() {
     const selectedCountry = sessionStorage.getItem("selectedCountry");
@@ -14,7 +31,7 @@ function getSelectedCountry() {
 }
 
 async function getCountryInfo(countryName) {
-    const allCountries = await global.getData();
+    const allCountries = await getData();
     const countryInfo = allCountries.find(country => country.name === countryName);
 
     renderCountryInfo(countryInfo);
@@ -24,28 +41,12 @@ async function renderCountryInfo(country) {
     const languages = country.languages.map(lang => lang.name).join(", ");
     const currencies = country.currencies.map(currency => currency.name).join(", ");
     const topLevelDomain = country.topLevelDomain.join(", ");
-    const borderCountriesName = await getBorderCountriesName();
+    const borderCountriesName = await getBorderCountriesName(country.borders);
     const borderCountriesMarkUp = borderCountriesName.map(border => {
         return `
-        <button class="button button--country">${border}</button>
+        <button class="button button--country" data-country="${border}">${border}</button>
         `
     }).join("");
-
-    async function getBorderCountriesName() {
-        const borderCountriesCode = country.borders;
-        const allCountries = await global.getData();
-        
-        allCountries.filter(country => {
-            borderCountriesCode.forEach(border => {
-                if (border === country.alpha3Code) {
-                    borderCountries.push(country.name);
-                    return borderCountries;
-                }
-            })
-        })
-
-        return borderCountries;
-    }
 
     container.innerHTML = `
     <img class="country__flag" src="${country.flag}" alt="country">
@@ -93,4 +94,19 @@ async function renderCountryInfo(country) {
         </div>
     </div>
     `
+}
+
+async function getBorderCountriesName(borderCodes) {
+    const allCountries = await getData();
+    
+    allCountries.filter(country => {
+        borderCodes.forEach(border => {
+            if (border === country.alpha3Code) {
+                borderCountries.push(country.name);
+                return borderCountries;
+            }
+        })
+    })
+    
+    return borderCountries;
 }

@@ -1,36 +1,91 @@
 import * as header from "./header.js"; 
 import * as global from "./global.js";
 
-const filterBtn = document.querySelector(".filter__custom-select");
-const filterSelection = document.querySelector(".filter__select-options");
+const filterSelection = document.querySelector(".filter");
+const searchBar = document.querySelector(".search__field");
 const mainContainer = document.querySelector("#main-container");
+let searchedCountry;
 
 header.loadHeader();
-renderCountries();
+filterCountries("all");
 
-filterBtn.addEventListener("click", toggleFilterSelection);
+filterSelection.addEventListener("click", e => {
+    const clickedElement = e.target;
+    const select = clickedElement.classList.contains("filter__custom-select");
+    const option = clickedElement.classList.contains("filter__select-option");
+
+    if (select) {
+        toggleFilterSelection();
+    } else if (option) {
+        const allOptions = document.querySelectorAll(".filter__select-option");
+
+        allOptions.forEach(option => option.setAttribute("data-selected", false));
+        clickedElement.setAttribute("data-selected", true);
+
+        filterCountries("region");
+    }
+})
+
+searchBar.addEventListener("input", () => {
+    searchedCountry = searchBar.value.toLowerCase();
+
+    filterCountries("search");
+})
+
+mainContainer.addEventListener("click", e => {
+    const countryCard = e.target.closest(".country--card");
+    const countryName = countryCard.dataset.countryName;
+
+    global.saveSelectedCountry(countryName);
+    window.location = "/country-details.html";
+})
 
 function toggleFilterSelection() {
-    const isOpen = filterSelection.classList.contains("filter__select-options--active");
+    const options = document.querySelector(".filter__select-options");
+    const isOpen = options.classList.contains("filter__select-options--active");
 
     if (isOpen) {
-        global.removeClass("active", filterSelection)
+        global.removeClass("active", options);
     } else {
-        global.addClass("active", filterSelection);
+        global.addClass("active", options);
     }
 }
 
-// async function getData() {
-//     const response = await fetch("https://restcountries.eu/rest/v2/all");
-//     const data = await response.json();
+async function filterCountries(filterBy) {
+    const data = await global.getData();
 
-//     return data;
-// }
+    switch (filterBy) {
+        case "all":
+            renderCountries(data);
+            break;
+            
+        case "search":
+            const searchedCountries = [];
 
-async function renderCountries() {
-    const allCountries = await global.getData();
+            data.forEach(country => {
+                const countryName = country.name;
 
-    allCountries.map(country => {
+                if (countryName.toLowerCase().indexOf(searchedCountry) !== -1) {
+                    searchedCountries.push(country)
+                }
+            })
+
+            renderCountries(searchedCountries);
+            break;
+
+        case "region":
+            const filterValue = document.querySelector("[data-selected='true']").dataset.value;
+            const filteredCountries = data.filter(country => country.region === filterValue);
+            
+            renderCountries(filteredCountries);
+            break;
+    }
+}
+
+function renderCountries(countries) {
+    mainContainer.innerHTML = "";
+
+    countries.map(country => {
         mainContainer.insertAdjacentHTML("beforeend", `
         
         <div class="country country--card" data-country-name="${country.name}">
@@ -54,16 +109,4 @@ async function renderCountries() {
         </div>        
         `)
     })
-}
-
-mainContainer.addEventListener("click", e => {
-    const countryCard = e.target.closest(".country--card");
-    const countryName = countryCard.dataset.countryName;
-
-    saveSelectedCountry(countryName);
-    window.location = "/country-details.html";
-})
-
-function saveSelectedCountry(country) {
-    sessionStorage.setItem("selectedCountry", country)
 }

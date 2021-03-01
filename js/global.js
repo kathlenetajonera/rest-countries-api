@@ -25,4 +25,8 @@ function removeClass(className, elem) {
     }
 }
 
-export { getData, addClass, removeClass }
+function saveSelectedCountry(country) {
+    sessionStorage.setItem("selectedCountry", country)
+}
+
+export { getData, addClass, removeClass, saveSelectedCountry }
