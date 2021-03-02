@@ -2,12 +2,26 @@ import * as header from "./header.js";
 import * as global from "./global.js";
 
 const filterSelection = document.querySelector(".filter");
+const filterOptions = document.querySelector(".filter__select-options");
 const searchBar = document.querySelector(".search__field");
-const mainContainer = document.querySelector("#main-container");
+const countriesContainer = document.querySelector("#countries-container");
 let searchedCountry;
 
 header.loadHeader();
+global.initialTheme();
+
 filterCountries("all");
+
+global.body.addEventListener("click", e => {
+    const target = e.target;
+    const filterSelectionOpen = filterOptions.classList.contains("filter__select-options--active");
+
+    if (filterSelectionOpen) {
+        if (!target.classList.contains("filter__custom-select")) {
+            global.removeClass("active", filterOptions);
+        }
+    }
+})
 
 filterSelection.addEventListener("click", e => {
     const clickedElement = e.target;
@@ -18,10 +32,13 @@ filterSelection.addEventListener("click", e => {
         toggleFilterSelection();
     } else if (option) {
         const allOptions = document.querySelectorAll(".filter__select-option");
+        const optionValue = clickedElement.dataset.value;
+        const customSelect = clickedElement.parentElement.previousElementSibling;
 
         allOptions.forEach(option => option.setAttribute("data-selected", false));
         clickedElement.setAttribute("data-selected", true);
 
+        customSelect.textContent = optionValue;
         filterCountries("region");
     }
 })
@@ -32,7 +49,7 @@ searchBar.addEventListener("input", () => {
     filterCountries("search");
 })
 
-mainContainer.addEventListener("click", e => {
+countriesContainer.addEventListener("click", e => {
     const countryCard = e.target.closest(".country--card");
     const countryName = countryCard.dataset.countryName;
 
@@ -41,17 +58,18 @@ mainContainer.addEventListener("click", e => {
 })
 
 function toggleFilterSelection() {
-    const options = document.querySelector(".filter__select-options");
-    const isOpen = options.classList.contains("filter__select-options--active");
+    const isOpen = filterOptions.classList.contains("filter__select-options--active");
 
     if (isOpen) {
-        global.removeClass("active", options);
+        global.removeClass("active", filterOptions);
     } else {
-        global.addClass("active", options);
+        global.addClass("active", filterOptions);
     }
 }
 
 async function filterCountries(filterBy) {
+    global.showLoading(countriesContainer);
+
     const data = await global.getData();
 
     switch (filterBy) {
@@ -83,13 +101,14 @@ async function filterCountries(filterBy) {
 }
 
 function renderCountries(countries) {
-    mainContainer.innerHTML = "";
+    global.hideLoading(countriesContainer);
+
+    countriesContainer.innerHTML = "";
 
     countries.map(country => {
-        mainContainer.insertAdjacentHTML("beforeend", `
+        countriesContainer.insertAdjacentHTML("beforeend", `
         
         <div class="country country--card" data-country-name="${country.name}">
-            <img class="country__flag" src="${country.flag}" alt="${country.name}">
 
             <div class="country__details">
                 <h2 class="country__name">${country.name}</h2>
@@ -108,5 +127,35 @@ function renderCountries(countries) {
             </div>
         </div>        
         `)
+    })
+
+    lazyLoadFlags(countries);
+}
+
+async function lazyLoadFlags(data) {
+    // const countries = await global.getData();
+    const countries = data;
+    const countryCard = document.querySelectorAll(".country");
+    const fetchFlag = entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const visibleCountry = entry.target;
+                const countryName = visibleCountry.dataset.countryName;
+                const countryFlag = countries.find(country => country.name === countryName).flag;
+
+                if (!visibleCountry.firstElementChild.classList.contains("country__flag")) {
+                    visibleCountry.insertAdjacentHTML("afterbegin", `
+                    <img class="country__flag" src="${countryFlag}" alt="${countryName}"></img>
+                    `)
+                }
+
+                observer.unobserve(visibleCountry);
+            }
+        })
+    }
+    const observer = new IntersectionObserver(fetchFlag)
+
+    countryCard.forEach(country => {
+        observer.observe(country);
     })
 }

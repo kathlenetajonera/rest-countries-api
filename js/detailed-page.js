@@ -1,12 +1,19 @@
 import * as header from "./header.js"; 
-import { getData, saveSelectedCountry } from "./global.js";
+import * as global from "./global.js";
 
 header.loadHeader();
 
 const mainContainer = document.querySelector(".main");
 const container = document.querySelector("#country-container");
-let borderCountries = [];
+const updateTheme = () => {
+    const colorTheme = localStorage.getItem("mode");
 
+    if (colorTheme === "dark") {
+        global.addClass("darkMode", global.body);
+    }
+}
+
+updateTheme();
 getSelectedCountry();
 
 mainContainer.addEventListener("click", e => {
@@ -19,7 +26,7 @@ mainContainer.addEventListener("click", e => {
     } else if (borderCountry) {
         const borderName = target.dataset.country;
 
-        saveSelectedCountry(borderName);
+        global.saveSelectedCountry(borderName);
         getSelectedCountry();
     }
 })
@@ -31,7 +38,7 @@ function getSelectedCountry() {
 }
 
 async function getCountryInfo(countryName) {
-    const allCountries = await getData();
+    const allCountries = await global.getData();
     const countryInfo = allCountries.find(country => country.name === countryName);
 
     renderCountryInfo(countryInfo);
@@ -54,7 +61,7 @@ async function renderCountryInfo(country) {
     <div class="country__details">
         <h2 class="country__name">${country.name}</h2>
 
-        <div class="grid grid--two">
+        <div class="grid grid--two-inner">
             <div class="wrapper">
                 <div class="country__detail">Native Name:
                     <p class="country__data" id="native-name">${country.name}</p>
@@ -97,7 +104,8 @@ async function renderCountryInfo(country) {
 }
 
 async function getBorderCountriesName(borderCodes) {
-    const allCountries = await getData();
+    const allCountries = await global.getData();
+    let borderCountries = [];
     
     allCountries.filter(country => {
         borderCodes.forEach(border => {

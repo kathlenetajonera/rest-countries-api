@@ -1,0 +1,27 @@
+$mediaBreakpoints: (
+    mobile: 23.4375rem,
+    tablet: 48rem,
+    desktop-sm: 64rem,
+    desktop-md: 81.25rem
+);
+
+@mixin media-query($size) {
+    @media (min-width: map-get($mediaBreakpoints, $size)) {
+        @content;
+    }
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(360deg);
+        border-width: .375rem;
+    }
+
+    50% {
+        border-width: .1875rem;
+    }
+
+    100% {
+        border-width: .375rem;
+    }
+}

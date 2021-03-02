@@ -1,3 +1,41 @@
+const body = document.body;
+const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+const initialTheme = () => {
+    if (isDarkMode) {
+        addClass("darkMode", body);
+        saveColorScheme("dark");
+    } else {
+        saveColorScheme("light");
+    }
+}
+
+const showLoading = (element) => {
+    element.insertAdjacentHTML("beforebegin", `
+    <div class="spinner"></div>
+    `)
+}
+
+const hideLoading = (element) => {
+    const loader = element.previousElementSibling;
+
+    if (loader.classList.contains("spinner")) {
+        loader.remove();
+    }
+}
+
+function toggleTheme() {
+    const isDarkMode = document.body.classList.contains("darkMode");
+
+    if (isDarkMode) {
+        removeClass("darkMode", body);
+        saveColorScheme("light");
+    } else {
+        addClass("darkMode", body);
+        saveColorScheme("dark");
+    }
+}
+
 async function getData() {
     const response = await fetch("https://restcountries.eu/rest/v2/all");
     const data = await response.json();
@@ -29,4 +67,8 @@ function saveSelectedCountry(country) {
     sessionStorage.setItem("selectedCountry", country)
 }
 
-export { getData, addClass, removeClass, saveSelectedCountry }
+function saveColorScheme(mode) {
+    localStorage.setItem("mode", mode);
+}
+
+export { body, isDarkMode, initialTheme, showLoading, hideLoading, toggleTheme, getData, addClass, removeClass, saveSelectedCountry }

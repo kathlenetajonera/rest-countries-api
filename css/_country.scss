@@ -4,9 +4,9 @@
     &--card {
         cursor: pointer;
 
-        @include media-query(tablet) {
-            width: 16.25rem;
-        }
+        // @include media-query(tablet) {
+        //     width: Max(16.25rem, 100%);
+        // }
 
         #{ $self }__flag {
             width: 100%;
@@ -34,8 +34,12 @@
         margin: 4rem 0;
 
         #{ $self }__flag {
-            width: Min(33.125rem, 100%);
+            width: 100%;
             height: 18.75rem;
+
+            @include media-query(desktop-sm) {
+                width: Min(33.125rem, 100%);
+            }
         }
 
         #{ $self }__name {
@@ -64,10 +68,14 @@
     &__border-text {
         font-weight: 600;
         margin: 0 1rem 0 0;
+        flex: 1;
     }
 
     &__border-countries {
         margin-top: 1rem;
+        display: flex;
+        flex-flow: row wrap;
+        flex: 2;
 
         @include media-query(tablet) {
             margin: 0;

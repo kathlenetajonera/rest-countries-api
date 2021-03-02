@@ -69,6 +69,7 @@ body {
     min-height: calc(100vh - 5.5rem);
     padding: 2rem 1rem;
     background-color: $lightModeBg;
+    position: relative;
 
     @include media-query(tablet) {
         padding: 2rem 4rem;
@@ -176,6 +177,7 @@ body {
     border: none;
     background-color: $white;
     font-family: $font-family;
+    cursor: pointer;
 
     &--back {
         padding: .5rem 1.5rem;
@@ -205,9 +207,15 @@ body {
     
         @include media-query(tablet) {
             margin: 3rem 0;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include media-query(desktop-sm) {
+            grid-template-columns: repeat(3, 1fr);
         }
 
         @include media-query(desktop-md) {
+            grid-template-columns: repeat(4, 1fr);
             grid-gap: 3rem;
         }
     }
@@ -215,9 +223,14 @@ body {
     &--two {
         margin: 1rem 0;
 
-        @include media-query(tablet) {
+        @include media-query(desktop-sm) {
             grid-template-columns: repeat(2, 1fr);
         }
+    }
+
+    &--two-inner {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        margin: 1rem 0;
     }
 }
 
@@ -261,5 +274,29 @@ body {
         &__custom-select, &__select-options {
             background-color: $darkModeElements;
         }
+    }
+
+    .button {
+        background-color: $darkModeElements;
+        color: $white;
+    }
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &::after {
+        content: "";
+        display: block;
+        width: 3rem;
+        height: 3rem;
+        border: .375rem solid transparent;
+        border-top-color: rgb(128, 128, 128);
+        border-bottom-color: rgb(128, 128, 128);
+        border-radius: 50%;
+        animation: loading .8s linear infinite;
     }
 }
