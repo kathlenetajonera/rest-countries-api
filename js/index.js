@@ -1,14 +1,15 @@
-import * as header from "./header.js"; 
-import * as global from "./global.js";
+import * as header from "./common js/header.js"; 
+import * as global from "./common js/global.js";
 
 const filterSelection = document.querySelector(".filter");
+const customSelect = document.querySelector(".filter__custom-select");
 const filterOptions = document.querySelector(".filter__select-options");
 const searchBar = document.querySelector(".search__field");
 const countriesContainer = document.querySelector("#countries-container");
 let searchedCountry;
 
 header.loadHeader();
-global.initialTheme();
+global.updateTheme();
 
 filterCountries("all");
 
@@ -33,13 +34,15 @@ filterSelection.addEventListener("click", e => {
     } else if (option) {
         const allOptions = document.querySelectorAll(".filter__select-option");
         const optionValue = clickedElement.dataset.value;
-        const customSelect = clickedElement.parentElement.previousElementSibling;
 
         allOptions.forEach(option => option.setAttribute("data-selected", false));
         clickedElement.setAttribute("data-selected", true);
 
         customSelect.textContent = optionValue;
         filterCountries("region");
+
+        //resets the search field
+        searchBar.value = "";
     }
 })
 
@@ -47,6 +50,9 @@ searchBar.addEventListener("input", () => {
     searchedCountry = searchBar.value.toLowerCase();
 
     filterCountries("search");
+
+    //resets the search field
+    customSelect.textContent = "Filter By Region";
 })
 
 countriesContainer.addEventListener("click", e => {
@@ -68,6 +74,8 @@ function toggleFilterSelection() {
 }
 
 async function filterCountries(filterBy) {
+
+    countriesContainer.innerHTML = "";
     global.showLoading(countriesContainer);
 
     const data = await global.getData();
@@ -102,7 +110,6 @@ async function filterCountries(filterBy) {
 
 function renderCountries(countries) {
     global.hideLoading(countriesContainer);
-
     countriesContainer.innerHTML = "";
 
     countries.map(country => {
@@ -133,7 +140,6 @@ function renderCountries(countries) {
 }
 
 async function lazyLoadFlags(data) {
-    // const countries = await global.getData();
     const countries = data;
     const countryCard = document.querySelectorAll(".country");
     const fetchFlag = entries => {

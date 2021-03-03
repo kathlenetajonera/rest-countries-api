@@ -1,19 +1,12 @@
-import * as header from "./header.js"; 
-import * as global from "./global.js";
+import * as header from "./common js/header.js"; 
+import * as global from "./common js/global.js";
 
 header.loadHeader();
 
 const mainContainer = document.querySelector(".main");
 const container = document.querySelector("#country-container");
-const updateTheme = () => {
-    const colorTheme = localStorage.getItem("mode");
 
-    if (colorTheme === "dark") {
-        global.addClass("darkMode", global.body);
-    }
-}
-
-updateTheme();
+global.updateTheme();
 getSelectedCountry();
 
 mainContainer.addEventListener("click", e => {
@@ -34,6 +27,8 @@ mainContainer.addEventListener("click", e => {
 function getSelectedCountry() {
     const selectedCountry = sessionStorage.getItem("selectedCountry");
 
+    container.innerHTML = "";
+    global.showLoading(container);
     getCountryInfo(selectedCountry)
 }
 
@@ -55,6 +50,8 @@ async function renderCountryInfo(country) {
         `
     }).join("");
 
+    global.hideLoading(container);
+
     container.innerHTML = `
     <img class="country__flag" src="${country.flag}" alt="country">
 
@@ -72,12 +69,19 @@ async function renderCountryInfo(country) {
                 <div class="country__detail">Region:
                     <p class="country__data" id="region">${country.region}</p>
                 </div>
+                
+                ${ !country.subregion ? "" :  `
                 <div class="country__detail">Sub Region:
                     <p class="country__data" id="sub-region">${country.subregion}</p>
                 </div>
+                `}
+
+                ${ !country.capital ? "" :  `
                 <div class="country__detail">Capital:
                     <p class="country__data" id="capital">${country.capital}</p>
                 </div>
+                `}
+
             </div>
 
             <div class="wrapper">
@@ -92,6 +96,7 @@ async function renderCountryInfo(country) {
                 </div>
             </div>
         </div>
+        ${ borderCountriesName.length === 0 ? "" : `
         <div class="flex-wrapper">
             <h3 class="country__border-text">Border Countries:</h3>
 
@@ -99,6 +104,7 @@ async function renderCountryInfo(country) {
                 ${borderCountriesMarkUp}
             </div>
         </div>
+        ` }
     </div>
     `
 }
@@ -118,3 +124,10 @@ async function getBorderCountriesName(borderCodes) {
     
     return borderCountries;
 }
+
+/* <div class="country__detail">Sub Region:
+    <p class="country__data" id="sub-region">${country.subregion}</p>
+</div>
+<div class="country__detail">Capital:
+    <p class="country__data" id="capital">${country.capital}</p>
+</div> */

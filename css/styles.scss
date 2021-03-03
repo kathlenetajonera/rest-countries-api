@@ -1,5 +1,5 @@
 @import "./variables";
-@import "./mixins";
+@import "./mixins&anims";
 @import "./country";
 
 html {
@@ -23,8 +23,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    // box-shadow: 0 .25rem .25rem 0 $lightModeBg;
+    box-shadow: 0 .25rem .25rem 0 $lightModeShadow;
     position: relative;
+    z-index: 1;
 
     @include media-query(tablet) {
         padding: 2rem 4rem;
@@ -93,7 +94,7 @@ body {
 .search {
     position: relative;
     width: Min(26rem, 100%);
-    // box-shadow: 0 0 1rem 0 $lightModeBg;
+    box-shadow: 0 0 .5rem 0 $lightModeShadow;
 
     &__icon {
         position: absolute;
@@ -137,6 +138,7 @@ body {
         background-color: $white;
         border-radius: .375rem;
         position: relative;
+        box-shadow: 0 0 .5rem 0 $lightModeShadow;
 
         &::after {
             content: "\f107";
@@ -158,6 +160,7 @@ body {
         margin-top: .5rem;
         position: absolute;
         width: 100%;
+        box-shadow: 0 0 .5rem 0 $lightModeShadow;
         display: none;
 
         &--active {
@@ -177,6 +180,8 @@ body {
     border: none;
     background-color: $white;
     font-family: $font-family;
+    border-radius: .375rem;
+    box-shadow: 0 0 .5rem 0 $lightModeShadow;
     cursor: pointer;
 
     &--back {
@@ -237,6 +242,7 @@ body {
 .darkMode {
     .header {
         background-color: $darkModeElements;
+        box-shadow: 0 .25rem .25rem 0 $darkModeShadow;
 
         &__title-link {
             color: $white;
@@ -253,6 +259,10 @@ body {
 
     .main {
         background-color: $darkModeBg;
+    }
+
+    .search {
+        box-shadow: 0 0 .5rem 0 $darkModeShadow;
     }
 
     .search__icon {
@@ -273,12 +283,14 @@ body {
 
         &__custom-select, &__select-options {
             background-color: $darkModeElements;
+            box-shadow: 0 0 .5rem 0 $darkModeShadow;
         }
     }
 
     .button {
         background-color: $darkModeElements;
         color: $white;
+        box-shadow: 0 0 .5rem 0 $darkModeShadow;
     }
 }
 
@@ -300,3 +312,15 @@ body {
         animation: loading .8s linear infinite;
     }
 }
+
+.attribution {
+    font-family: $font-family;
+    font-size: 11px;
+    text-align: center;
+    padding: 1rem 0;
+
+    a {
+        color: #3e52a3;
+    }
+}
+  

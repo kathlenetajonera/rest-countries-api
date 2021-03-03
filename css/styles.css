@@ -28,6 +28,8 @@
 
 .country--card {
   cursor: pointer;
+  -webkit-box-shadow: 0 0 0.5rem 0 rgba(128, 128, 128, 0.171);
+          box-shadow: 0 0 0.5rem 0 rgba(128, 128, 128, 0.171);
 }
 
 .country--card .country__flag {
@@ -121,6 +123,11 @@
   color: white;
 }
 
+.darkMode .country--card {
+  -webkit-box-shadow: 0 0 0.5rem 0 #1e2b34;
+          box-shadow: 0 0 0.5rem 0 #1e2b34;
+}
+
 .darkMode .country--card .country__details {
   background-color: #2b3945;
   color: white;
@@ -156,7 +163,10 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-shadow: 0 0.25rem 0.25rem 0 rgba(128, 128, 128, 0.171);
+          box-shadow: 0 0.25rem 0.25rem 0 rgba(128, 128, 128, 0.171);
   position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 48rem) {
@@ -239,6 +249,8 @@ body {
 .search {
   position: relative;
   width: Min(26rem, 100%);
+  -webkit-box-shadow: 0 0 0.5rem 0 rgba(128, 128, 128, 0.171);
+          box-shadow: 0 0 0.5rem 0 rgba(128, 128, 128, 0.171);
 }
 
 .search__icon {
@@ -298,6 +310,8 @@ body {
   background-color: white;
   border-radius: .375rem;
   position: relative;
+  -webkit-box-shadow: 0 0 0.5rem 0 rgba(128, 128, 128, 0.171);
+          box-shadow: 0 0 0.5rem 0 rgba(128, 128, 128, 0.171);
 }
 
 .filter__custom-select::after {
@@ -320,6 +334,8 @@ body {
   margin-top: .5rem;
   position: absolute;
   width: 100%;
+  -webkit-box-shadow: 0 0 0.5rem 0 rgba(128, 128, 128, 0.171);
+          box-shadow: 0 0 0.5rem 0 rgba(128, 128, 128, 0.171);
   display: none;
 }
 
@@ -336,6 +352,9 @@ body {
   border: none;
   background-color: white;
   font-family: "Nunito Sans", sans-serif;
+  border-radius: .375rem;
+  -webkit-box-shadow: 0 0 0.5rem 0 rgba(128, 128, 128, 0.171);
+          box-shadow: 0 0 0.5rem 0 rgba(128, 128, 128, 0.171);
   cursor: pointer;
 }
 
@@ -410,6 +429,8 @@ body {
 
 .darkMode .header {
   background-color: #2b3945;
+  -webkit-box-shadow: 0 0.25rem 0.25rem 0 #1e2b34;
+          box-shadow: 0 0.25rem 0.25rem 0 #1e2b34;
 }
 
 .darkMode .header__title-link {
@@ -426,6 +447,11 @@ body {
 
 .darkMode .main {
   background-color: #202c37;
+}
+
+.darkMode .search {
+  -webkit-box-shadow: 0 0 0.5rem 0 #1e2b34;
+          box-shadow: 0 0 0.5rem 0 #1e2b34;
 }
 
 .darkMode .search__icon {
@@ -459,11 +485,15 @@ body {
 
 .darkMode .filter__custom-select, .darkMode .filter__select-options {
   background-color: #2b3945;
+  -webkit-box-shadow: 0 0 0.5rem 0 #1e2b34;
+          box-shadow: 0 0 0.5rem 0 #1e2b34;
 }
 
 .darkMode .button {
   background-color: #2b3945;
   color: white;
+  -webkit-box-shadow: 0 0 0.5rem 0 #1e2b34;
+          box-shadow: 0 0 0.5rem 0 #1e2b34;
 }
 
 .spinner {
@@ -485,5 +515,16 @@ body {
   border-radius: 50%;
   -webkit-animation: loading .8s linear infinite;
           animation: loading .8s linear infinite;
+}
+
+.attribution {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 11px;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.attribution a {
+  color: #3e52a3;
 }
 /*# sourceMappingURL=styles.css.map */
