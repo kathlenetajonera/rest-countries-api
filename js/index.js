@@ -1,4 +1,4 @@
-import * as header from "./common js/header.js"; 
+import * as common from "./common js/header&footer.js"; 
 import * as global from "./common js/global.js";
 
 const filterSelection = document.querySelector(".filter");
@@ -8,7 +8,8 @@ const searchBar = document.querySelector(".search__field");
 const countriesContainer = document.querySelector("#countries-container");
 let searchedCountry;
 
-header.loadHeader();
+common.loadHeader();
+common.loadFooter();
 global.updateTheme();
 
 filterCountries("all");
@@ -109,6 +110,8 @@ async function filterCountries(filterBy) {
 }
 
 function renderCountries(countries) {
+    const numberFormat = new Intl.NumberFormat("en");
+
     global.hideLoading(countriesContainer);
     countriesContainer.innerHTML = "";
 
@@ -121,7 +124,7 @@ function renderCountries(countries) {
                 <h2 class="country__name">${country.name}</h2>
 
                 <div class="country__detail">Population:
-                    <p class="country__data" id="population">${country.population}</p>
+                    <p class="country__data" id="population">${numberFormat.format(country.population)}</p>
                 </div>
                 
                 <div class="country__detail">Region:
@@ -139,7 +142,7 @@ function renderCountries(countries) {
     lazyLoadFlags(countries);
 }
 
-async function lazyLoadFlags(data) {
+function lazyLoadFlags(data) {
     const countries = data;
     const countryCard = document.querySelectorAll(".country");
     const fetchFlag = entries => {

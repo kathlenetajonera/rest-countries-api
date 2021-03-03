@@ -1,12 +1,13 @@
-import * as header from "./common js/header.js"; 
+import * as common from "./common js/header&footer.js"; 
 import * as global from "./common js/global.js";
-
-header.loadHeader();
 
 const mainContainer = document.querySelector(".main");
 const container = document.querySelector("#country-container");
 
+common.loadHeader();
+common.loadFooter();
 global.updateTheme();
+
 getSelectedCountry();
 
 mainContainer.addEventListener("click", e => {
@@ -29,6 +30,7 @@ function getSelectedCountry() {
 
     container.innerHTML = "";
     global.showLoading(container);
+
     getCountryInfo(selectedCountry)
 }
 
@@ -40,6 +42,7 @@ async function getCountryInfo(countryName) {
 }  
 
 async function renderCountryInfo(country) {
+    const numberFormat = new Intl.NumberFormat("en");
     const languages = country.languages.map(lang => lang.name).join(", ");
     const currencies = country.currencies.map(currency => currency.name).join(", ");
     const topLevelDomain = country.topLevelDomain.join(", ");
@@ -64,7 +67,7 @@ async function renderCountryInfo(country) {
                     <p class="country__data" id="native-name">${country.name}</p>
                 </div>
                 <div class="country__detail">Population:
-                    <p class="country__data" id="population">${country.population}</p>
+                    <p class="country__data" id="population">${numberFormat.format(country.population)}</p>
                 </div>
                 <div class="country__detail">Region:
                     <p class="country__data" id="region">${country.region}</p>
@@ -124,10 +127,3 @@ async function getBorderCountriesName(borderCodes) {
     
     return borderCountries;
 }
-
-/* <div class="country__detail">Sub Region:
-    <p class="country__data" id="sub-region">${country.subregion}</p>
-</div>
-<div class="country__detail">Capital:
-    <p class="country__data" id="capital">${country.capital}</p>
-</div> */

@@ -15,9 +15,6 @@ const updateTheme = () => {
         if (colorTheme === "dark") {
             addClass("darkMode", body);
             saveColorScheme("dark");
-        } else {
-            removeClass("darkMode", body);
-            saveColorScheme("light");
         }
     }
 }

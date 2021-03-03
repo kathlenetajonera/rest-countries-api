@@ -5,10 +5,6 @@
         cursor: pointer;
         box-shadow: 0 0 .5rem 0 $lightModeShadow;
 
-        // @include media-query(tablet) {
-        //     width: Max(16.25rem, 100%);
-        // }
-
         #{ $self }__flag {
             width: 100%;
             height: 11.25rem;
@@ -87,14 +83,14 @@
 .darkMode {
     .country {
         color: $white;
-    }
 
-    .country--card {
-        box-shadow: 0 0 .5rem 0 $darkModeShadow;
+        &--card {
+            box-shadow: 0 0 .5rem 0 $darkModeShadow;
 
-        .country__details {
-            background-color: $darkModeElements;
-            color: $white;
+            .country__details {
+                background-color: $darkModeElements;
+                color: $white;
+            }
         }
     }
 }
