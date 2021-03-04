@@ -61,7 +61,7 @@ countriesContainer.addEventListener("click", e => {
     const countryName = countryCard.dataset.countryName;
 
     global.saveSelectedCountry(countryName);
-    window.location = "/country-details.html";
+    window.location = "/country-details";
 })
 
 function toggleFilterSelection() {
