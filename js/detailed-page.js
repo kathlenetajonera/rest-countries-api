@@ -16,7 +16,7 @@ mainContainer.addEventListener("click", e => {
     const borderCountry = target.classList.contains("button--country");
 
     if (backBtn) {
-        window.location = "index.html";
+        window.location = "/";
     } else if (borderCountry) {
         const borderName = target.dataset.country;
 
