@@ -45,8 +45,15 @@ function toggleTheme() {
     }
 }
 
-async function getData() {
+async function getAllCountries() {
     const response = await fetch("https://restcountries.eu/rest/v2/all");
+    const data = await response.json();
+
+    return data;
+}
+
+async function getCountriesByRegion(region) {
+    const response = await fetch(`https://restcountries.eu/rest/v2/region/${region}`);
     const data = await response.json();
 
     return data;
@@ -80,4 +87,4 @@ function saveColorScheme(mode) {
     localStorage.setItem("mode", mode);
 }
 
-export { body, isDarkMode, updateTheme, showLoading, hideLoading, toggleTheme, getData, addClass, removeClass, saveSelectedCountry }
+export { body, isDarkMode, updateTheme, showLoading, hideLoading, toggleTheme, getAllCountries, getCountriesByRegion, addClass, removeClass, saveSelectedCountry }

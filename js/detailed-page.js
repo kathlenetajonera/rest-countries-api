@@ -35,11 +35,11 @@ function getSelectedCountry() {
 }
 
 async function getCountryInfo(countryName) {
-    const allCountries = await global.getData();
-    const countryInfo = allCountries.find(country => country.name === countryName);
+    const response = await fetch(`https://restcountries.eu/rest/v2/name/${countryName}`);
+    const countryInfo = await response.json();
 
-    renderCountryInfo(countryInfo);
-}  
+    renderCountryInfo(countryInfo[0]);
+} 
 
 async function renderCountryInfo(country) {
     const numberFormat = new Intl.NumberFormat("en");
@@ -64,24 +64,24 @@ async function renderCountryInfo(country) {
         <div class="grid grid--two-inner">
             <div class="wrapper">
                 <div class="country__detail">Native Name:
-                    <p class="country__data" id="native-name">${country.name}</p>
+                    <p class="country__data">${country.name}</p>
                 </div>
                 <div class="country__detail">Population:
-                    <p class="country__data" id="population">${numberFormat.format(country.population)}</p>
+                    <p class="country__data">${numberFormat.format(country.population)}</p>
                 </div>
                 <div class="country__detail">Region:
-                    <p class="country__data" id="region">${country.region}</p>
+                    <p class="country__data">${country.region}</p>
                 </div>
                 
                 ${ !country.subregion ? "" :  `
                 <div class="country__detail">Sub Region:
-                    <p class="country__data" id="sub-region">${country.subregion}</p>
+                    <p class="country__data">${country.subregion}</p>
                 </div>
                 `}
 
                 ${ !country.capital ? "" :  `
                 <div class="country__detail">Capital:
-                    <p class="country__data" id="capital">${country.capital}</p>
+                    <p class="country__data">${country.capital}</p>
                 </div>
                 `}
 
@@ -89,20 +89,20 @@ async function renderCountryInfo(country) {
 
             <div class="wrapper">
                 <div class="country__detail">Top Level Domain:
-                    <p class="country__data" id="top-level-domain">${topLevelDomain}</p>
+                    <p class="country__data">${topLevelDomain}</p>
                 </div>
                 <div class="country__detail">Currencies:
-                    <p class="country__data" id="currencies">${currencies}</p>
+                    <p class="country__data">${currencies}</p>
                 </div>
                 <div class="country__detail">Languages:
-                    <p class="country__data" id="languages">${languages}</p>
+                    <p class="country__data">${languages}</p>
                 </div>
             </div>
         </div>
+
         ${ borderCountriesName.length === 0 ? "" : `
         <div class="flex-wrapper">
             <h3 class="country__border-text">Border Countries:</h3>
-
             <div class="country__border-countries">
                 ${borderCountriesMarkUp}
             </div>
@@ -113,7 +113,7 @@ async function renderCountryInfo(country) {
 }
 
 async function getBorderCountriesName(borderCodes) {
-    const allCountries = await global.getData();
+    const allCountries = await global.getAllCountries();
     let borderCountries = [];
     
     allCountries.filter(country => {

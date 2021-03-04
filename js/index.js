@@ -79,17 +79,17 @@ async function filterCountries(filterBy) {
     countriesContainer.innerHTML = "";
     global.showLoading(countriesContainer);
 
-    const data = await global.getData();
-
     switch (filterBy) {
         case "all":
+            const data = await global.getAllCountries();
             renderCountries(data);
             break;
             
         case "search":
+            const allCountries = await global.getAllCountries();
             const searchedCountries = [];
 
-            data.forEach(country => {
+            allCountries.forEach(country => {
                 const countryName = country.name;
 
                 if (countryName.toLowerCase().indexOf(searchedCountry) !== -1) {
@@ -102,8 +102,8 @@ async function filterCountries(filterBy) {
 
         case "region":
             const filterValue = document.querySelector("[data-selected='true']").dataset.value;
-            const filteredCountries = data.filter(country => country.region === filterValue);
-            
+            const filteredCountries = await global.getCountriesByRegion(filterValue)
+
             renderCountries(filteredCountries);
             break;
     }
@@ -124,15 +124,15 @@ function renderCountries(countries) {
                 <h2 class="country__name">${country.name}</h2>
 
                 <div class="country__detail">Population:
-                    <p class="country__data" id="population">${numberFormat.format(country.population)}</p>
+                    <p class="country__data">${numberFormat.format(country.population)}</p>
                 </div>
                 
                 <div class="country__detail">Region:
-                    <p class="country__data" id="region">${country.region}</p>
+                    <p class="country__data">${country.region}</p>
                 </div>
 
                 <div class="country__detail">Capital:
-                    <p class="country__data" id="capital">${country.capital}</p>
+                    <p class="country__data">${country.capital}</p>
                 </div>
             </div>
         </div>        
